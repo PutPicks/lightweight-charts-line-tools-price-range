@@ -28,11 +28,11 @@ import {
 	LineOptions,
 	TextRendererData,
 	LineToolPoint,
-	LineToolCullingInfo
+	LineToolCullingInfo,
+	ensureNotNull
 } from 'lightweight-charts-line-tools-core';
 
 import { LineToolPriceRange } from '../model/LineToolPriceRange';
-import { ensureNotNull } from 'lightweight-charts-line-tools-core/dist/utils/helpers';
 
 
 /**
