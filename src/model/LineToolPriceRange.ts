@@ -126,7 +126,13 @@ export const PriceRangeOptionDefaults: LineToolOptionsInternal<'PriceRange'> = {
 		showCenterVerticalLine: true,
 		showTopPrice: true,
 		showBottomPrice: true,
-	}
+		
+		// Custom label styling
+		label: {
+			color: '#ffffff',
+			fontSize: 12,
+		},
+	} as any
 };
 
 

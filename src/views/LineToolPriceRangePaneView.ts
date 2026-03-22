@@ -225,6 +225,11 @@ export class LineToolPriceRangePaneView<HorzScaleItem> extends LineToolPaneView<
 		
 		const labelPivot = new AnchorPoint(geometricCenterX, labelY as Coordinate, 0);
 
+		// Get custom label options if provided
+		const labelOptions = (priceRangeOptions as any).label || {};
+		const labelColor = labelOptions.color || '#ffffff';
+		const labelFontSize = labelOptions.fontSize || 12;
+
 		// Prepare text options
 		const finalLabelOptions = deepCopy(options.text);
 		finalLabelOptions.value = labelText;
@@ -235,8 +240,9 @@ export class LineToolPriceRangePaneView<HorzScaleItem> extends LineToolPaneView<
 		finalLabelOptions.box.alignment.horizontal = BoxHorizontalAlignment.Center;
 		finalLabelOptions.box.alignment.vertical = placementVerticalAlignment;
 		finalLabelOptions.alignment = TextAlignment.Center;
-		finalLabelOptions.font.size = 14;
+		finalLabelOptions.font.size = labelFontSize;
 		finalLabelOptions.font.bold = true;
+		finalLabelOptions.font.color = labelColor;
 		
 		// Offset to push label outside the box
 		finalLabelOptions.box.offset = { x: 0, y: isUpward ? -20 : 20 };
