@@ -137,7 +137,7 @@ export class LineToolPriceRangePaneView<HorzScaleItem> extends LineToolPaneView<
 		const P0_cull = this._tool.getPoint(0)!;
 		const P1_cull = this._tool.getPoint(1)!;
 
-		if(P0_cull && P1_cull && this._points.length >= this._tool.pointsCount && !this._tool.isCreating() && !this._tool.isEditing()){
+		if(false && P0_cull && P1_cull && this._points.length >= this._tool.pointsCount && !this._tool.isCreating() && !this._tool.isEditing()){
 			
 			// --- 1. Calculate the Four Geometric Corner Points (Logical) ---
 			// These four points define the absolute geometric boundaries regardless of P0/P1 storage.
