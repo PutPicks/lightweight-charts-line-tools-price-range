@@ -109,11 +109,14 @@ export class LineToolPriceRangePaneView<HorzScaleItem> extends LineToolPaneView<
 			// Culling logic disabled
 		}
 
-		// --- 1. Rectangle Body ---
+		// --- 1. Rectangle Body (no border - we draw top/bottom lines separately) ---
 		const rectBodyPoints: [AnchorPoint, AnchorPoint] = [topLeftScreen, bottomRightScreen];
 		
+		const rectOptions = deepCopy(options.priceRange.rectangle);
+		rectOptions.border = undefined;
+		
 		this._rectangleRenderer.setData({ 
-			...deepCopy(options.priceRange.rectangle),
+			...rectOptions,
 			points: rectBodyPoints,
 			hitTestBackground: true,
 			toolDefaultHoverCursor: options.defaultHoverCursor,
@@ -121,6 +124,41 @@ export class LineToolPriceRangePaneView<HorzScaleItem> extends LineToolPaneView<
 		});
 
 		compositeRenderer.append(this._rectangleRenderer);
+
+		// --- 1b. Top and Bottom border lines only ---
+		const borderColor = options.priceRange.rectangle.border?.color || '#2196F3';
+		const borderWidth = options.priceRange.rectangle.border?.width || 2;
+		const borderStyle = options.priceRange.rectangle.border?.style ?? LineStyle.Solid;
+
+		const topLineRenderer = new SegmentRenderer<HorzScaleItem>();
+		topLineRenderer.setData({
+			points: [new AnchorPoint(minX, minY, 0), new AnchorPoint(maxX, minY, 1)],
+			line: {
+				color: borderColor,
+				width: borderWidth,
+				style: borderStyle,
+				extend: { left: false, right: false },
+				join: 'miter',
+				cap: 'butt',
+				end: { left: LineEnd.Normal, right: LineEnd.Normal },
+			} as LineOptions,
+		});
+		compositeRenderer.append(topLineRenderer);
+
+		const bottomLineRenderer = new SegmentRenderer<HorzScaleItem>();
+		bottomLineRenderer.setData({
+			points: [new AnchorPoint(minX, maxY, 0), new AnchorPoint(maxX, maxY, 1)],
+			line: {
+				color: borderColor,
+				width: borderWidth,
+				style: borderStyle,
+				extend: { left: false, right: false },
+				join: 'miter',
+				cap: 'butt',
+				end: { left: LineEnd.Normal, right: LineEnd.Normal },
+			} as LineOptions,
+		});
+		compositeRenderer.append(bottomLineRenderer);
 
 		// --- 2. Vertical Arrow (TradingView style) ---
 		const activePoints = tool.points();
