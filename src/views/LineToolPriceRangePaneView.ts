@@ -113,7 +113,7 @@ export class LineToolPriceRangePaneView<HorzScaleItem> extends LineToolPaneView<
 		const rectBodyPoints: [AnchorPoint, AnchorPoint] = [topLeftScreen, bottomRightScreen];
 		
 		const rectOptions = deepCopy(options.priceRange.rectangle);
-		rectOptions.border = undefined;
+		(rectOptions as any).border = null;
 		
 		this._rectangleRenderer.setData({ 
 			...rectOptions,
